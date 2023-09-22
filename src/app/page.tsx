@@ -1,11 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from "react-share";
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [message, setMessage] = useState("");
+
+  const [myUrl, setMyUrl] = useState("");
 
   async function handleQuestion() {
     try {
@@ -35,6 +49,11 @@ export default function Home() {
       console.error("Error al recibir datos:", error);
     }
   }
+
+  useEffect(() => {
+    const url = window.location.href;
+    setMyUrl(url);
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center py-20 px-5 max-w-3xl mx-auto">
@@ -86,56 +105,79 @@ export default function Home() {
           {message === "" ? "Aquí verás la respuesta del asistente" : message}
         </p>
         <div className="flex justify-center text-[--fg-sec] text-xs sm:text-sm mt-4">
-          <Link href="#" legacyBehavior>
-            <a className="flex items-center mx-4 hover:font-semibold">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="mr-2"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M6 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                <path d="M18 6m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                <path d="M8.7 10.7l6.6 -3.4"></path>
-                <path d="M8.7 13.3l6.6 3.4"></path>
-              </svg>
-              <span>Compartir</span>
-            </a>
-          </Link>
-          <Link href="#" legacyBehavior>
-            <a className="flex items-center mx-4 hover:font-semibold">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="mr-2"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
-                <path d="M20 4v5h-5"></path>
-              </svg>
-              <span>Nueva pregunta</span>
-            </a>
-          </Link>
+          {/* <p
+            onClick={() => props.setOpenModal("pop-up")}
+            className="flex cursor-pointer items-center mx-4 hover:font-semibold"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="mr-2"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+              <path d="M18 6m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+              <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+              <path d="M8.7 10.7l6.6 -3.4"></path>
+              <path d="M8.7 13.3l6.6 3.4"></path>
+            </svg>
+            <span>Compartir</span>
+          </p> */}
+          <p
+            onClick={() => {
+              setPrompt("");
+              setMessage("");
+            }}
+            className="flex cursor-pointer items-center mx-4 hover:font-semibold"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="mr-2"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+              <path d="M20 4v5h-5"></path>
+            </svg>
+            <span>Nueva pregunta</span>
+          </p>
+        </div>
+        <div className="flex items-center flex-wrap gap-2 mt-5">
+          <p>Compartir: </p>
+          <WhatsappShareButton url={myUrl}>
+            <WhatsappIcon round={true} size={32} />
+          </WhatsappShareButton>
+          <TwitterShareButton url={myUrl}>
+            <TwitterIcon round={true} size={32} />
+          </TwitterShareButton>
+          <FacebookShareButton url={myUrl}>
+            <FacebookIcon round={true} size={32} />
+          </FacebookShareButton>
+          <LinkedinShareButton url={myUrl}>
+            <LinkedinIcon round={true} size={32} />
+          </LinkedinShareButton>
+          <TelegramShareButton url={myUrl}>
+            <TelegramIcon round={true} size={32} />
+          </TelegramShareButton>
         </div>
       </div>
 
       <div className="mt-10 sm:mt-20">
-        <Link href="#" legacyBehavior>
+        <Link href="https://github.com/marcoa16b/evie-assistant" legacyBehavior>
           <a className="flex items-center">
             <svg
               className="bg-[--primary] rounded-full text-black p-0.5"

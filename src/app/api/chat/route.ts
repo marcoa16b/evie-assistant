@@ -4,7 +4,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
-  baseURL: process.env.OPENAI_API_URL || '',
+  baseURL: process.env.OPENAI_API_URL || 'https://api.openai.com/v1',
 });
 
 // IMPORTANT! Set the runtime to edge
